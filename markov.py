@@ -12,7 +12,7 @@ start_counts = dict() # bigram dictionary, counts of start words
 trigrams_seen = 0
 counts = dict() # trigram dictionary, counts of trigrams
 
-TOKEN = ""
+TOKEN = "" # your token to connect to Discord API
 link = "https://discord.com/api/oauth2/authorize?client_id=951690562694676500&permissions=67584&scope=bot"
 read_me = '**Commands**\n'
 command_prefix = "m!"
