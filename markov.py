@@ -7,6 +7,7 @@ import json
 import random
 import warnings
 
+from discord import Embed
 from discord import Activity
 from discord.ext import commands
 
@@ -101,6 +102,13 @@ def process_message(message):
         else:
             counts[trigram[0]][trigram[1]][trigram[2]] += 1
 
+def write_help():
+    global read_me
+    with open('README.md', 'r') as f:
+        lines = f.readlines()[16:]
+        for line in lines: read_me += line.replace('m!', command_prefix)
+    print('Generated help message.')
+
 @bot.event
 async def on_ready():
 
@@ -124,11 +132,7 @@ async def on_ready():
     await bot.change_presence(activity=Activity(name='Слава Україні!', type=2))
 
     # generate help file
-    global read_me
-    with open('README.md', 'r') as f:
-        lines = f.readlines()[16:]
-        for line in lines: read_me += line
-    print('Generated help message.')
+    write_help()
 
     # load in saved params
     global message_send_prob
@@ -137,6 +141,7 @@ async def on_ready():
         lines = f.readlines()
         message_send_prob = float(lines[0])
         max_message_length = int(lines[1])
+        command_prefix = lines[2]
     print('Loaded params.')
 
     print("Logged in as " + bot.user.name + " /---/ " + str(bot.user.id))
@@ -192,7 +197,7 @@ async def msg_prob(ctx, arg=None):
     else:
         message_send_prob = arg / 100
     with open('params.txt', 'w') as f:
-        f.write(str(message_send_prob) + '\n' + str(max_message_length))
+        f.write(str(message_send_prob) + '\n' + str(max_message_length) + '\n' + command_prefix)
     await ctx.send(f'Markov\'s probability of replying is now {message_send_prob * 100}%.')
 
 @bot.command()
@@ -207,7 +212,7 @@ async def max_length(ctx, arg=None):
         arg = abs(int(arg))
         max_message_length = abs(arg)
         with open('params.txt', 'w') as f:
-            f.write(str(message_send_prob) + '\n' + str(max_message_length))
+            f.write(str(message_send_prob) + '\n' + str(max_message_length) + '\n' + command_prefix)
         await ctx.send(f'Markov\'s maximum message length is now {arg}.')
     except:
         await ctx.send(f'Argument must be a positive integer. Passing in other numbers will cause the absolute value of the decimal portion to be ignored.')
@@ -235,7 +240,9 @@ async def read_hist(ctx, arg=None):
 
 @bot.command()
 async def get_link(ctx):
-    await ctx.send(f'Add me to your server! You must have the Manage Server permission on your server. + {link}')
+    await ctx.send('Add me to your server! You must have the Manage Server permission to do so.')
+    embed = Embed(title="Markov", url=link, description='Add Markov to your server!')
+    await ctx.send(embed=embed)
 
 @bot.command()
 @commands.check_any(commands.has_permissions(manage_messages=True), commands.is_owner())

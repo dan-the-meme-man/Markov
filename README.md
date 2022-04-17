@@ -17,7 +17,7 @@ I hope to maintain this project and update it regularly, probably with added fea
 - `m!get_link` - Wanna add Markov to another server? Click this link (it's not a scam, promise.)
 - `m!help` - Display this command list.
 - `m!max_length <length>` - Censor Markov. He'll only be allowed to say up to `length` words at a time. Default 30.
-- `m!msg_prob <probability>` - Censor Markov. He'll have a `probability` chance of replying to each message. I recommend keeping this low, as he can be quite annoying. Default 0.05 (~ every 20 messages).
+- `m!msg_prob <probability>` - Censor Markov. He'll have a `probability` chance of replying to each message. I recommend keeping this low, as he can be quite annoying. Default 5% (~ every 20 messages).
 - `m!read_hist <length>` - Let Markov bring up ancient history (well, the most recent `length` messages at least.)
 - `m!shutdown` - Send Markov to bed.
 - `m!talk` - See what Markov thinks about all this.
