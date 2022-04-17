@@ -126,7 +126,7 @@ async def on_ready():
     # generate help file
     global read_me
     with open('README.md', 'r') as f:
-        lines = f.readlines()[12:]
+        lines = f.readlines()[16:]
         for line in lines: read_me += line
     print('Generated help message.')
 

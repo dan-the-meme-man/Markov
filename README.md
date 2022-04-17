@@ -8,6 +8,10 @@ This project is open-source, and just for fun. I built it to replace a beloved b
 
 I hope to maintain this project and update it regularly, probably with added features and optimizations. Enjoy!
 
+### Add me to your server
+
+<https://discord.com/api/oauth2/authorize?client_id=951690562694676500&permissions=67584&scope=bot>
+
 ### List of Commands
 
 - `m!get_link` - Wanna add Markov to another server? Click this link (it's not a scam, promise.)
