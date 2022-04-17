@@ -6,13 +6,10 @@ from discord.ext import commands
 
 warnings.simplefilter("ignore")
 
-start_bigrams_seen = 0
 start_counts = dict() # bigram dictionary, counts of start words
-
-trigrams_seen = 0
 counts = dict() # trigram dictionary, counts of trigrams
 
-TOKEN = "" # your token to connect to Discord API
+TOKEN = "" # token to log the bot in
 link = "https://discord.com/api/oauth2/authorize?client_id=951690562694676500&permissions=67584&scope=bot"
 read_me = '**Commands**\n'
 command_prefix = "m!"
@@ -59,10 +56,7 @@ def gen_message():
 
 def process_message(message):
 
-    global start_bigrams_seen
     global start_counts
-
-    global trigrams_seen
     global counts
 
     words = str(message.content).split() # split message
@@ -78,7 +72,6 @@ def process_message(message):
         start_counts[words[0]][words[1]] = 1
     else:
         start_counts[words[0]][words[1]] += 1
-    start_bigrams_seen += 1
 
     # count new trigrams and update counts
     for i in range(2, len(words)): # for each possible trigram
@@ -94,7 +87,6 @@ def process_message(message):
             counts[trigram[0]][trigram[1]][trigram[2]] = 1
         else:
             counts[trigram[0]][trigram[1]][trigram[2]] += 1
-        trigrams_seen += 1
 
 @bot.event
 async def on_ready():
@@ -196,10 +188,10 @@ async def read_hist(ctx, arg=None):
 
 @bot.command()
 async def get_link(ctx):
-    await ctx.send(f'Add me to your server! You must have the Manage Server permission on your server.')
+    await ctx.send(f'Add me to your server! You must have the Manage Server permission on your server. + {link}')
 
 @bot.command()
-async def shutdown():
+async def shutdown(ctx):
     write()
     exit(0)
 
