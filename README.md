@@ -21,4 +21,4 @@ I hope to maintain this project and update it regularly, probably with added fea
 - `m!read_hist <length>` - Let Markov bring up ancient history (well, the most recent `length` messages at least.)
 - `m!shutdown` - Send Markov to bed.
 - `m!talk` - See what Markov thinks about all this.
-- `m!trigger'` - Same as `m!talk`.
+- `m!trigger` - Same as `m!talk`.
