@@ -67,13 +67,13 @@ def gen_message(): # randomly generate a message
 
     return message
 
-def process_message(message):
+def process_message(content):
 
     # access dictionaries
     global start_counts
     global counts
 
-    words = str(message.content).split() # split message
+    words = content.split() # split message
 
     # include unigrams as start bigrams too!
     if len(words) == 1: words.append('')
@@ -156,14 +156,16 @@ async def on_message(message):
     # look for a command
     await bot.process_commands(message)
 
-    # it was a command - don't process it!
-    if str(message.content).startswith(command_prefix): return
+    content = str(message.content)
 
-    process_message(message)
+    # it was a command - don't process it!
+    if content.startswith(command_prefix): return
+
+    process_message(content)
     write() # save to file
 
     # the bot may randomly reply!
-    if random.random() < message_send_prob:
+    if random.random() < message_send_prob or 'markov' in content.lower():
         await message.channel.send(gen_message())
 
 @bot.event
@@ -171,7 +173,7 @@ async def on_disconnect():
     write() # save to file
     print('Markov disconnected.')
 
-@bot.command()
+@bot.command(aliases=['trigger'])
 async def talk(ctx):
     try:
         await ctx.send(gen_message())
